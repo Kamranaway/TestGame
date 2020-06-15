@@ -2,6 +2,9 @@
 using Unity.Mathematics;
 using UnityEngine;
 
+/*
+ * Class responsible for handling orbital camera control
+ */
 public class OrbitalCam : MonoBehaviour
 {
     [SerializeField] private float sensitivity = .25f;

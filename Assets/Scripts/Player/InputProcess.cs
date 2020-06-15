@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
  * The given input can be instantiated as a toggle or standard input.
  * Any instance of InputProcess must be called in the Update method of a script.
  * 
+ * Declaration goes as follows:
+ * InputProcess myInput = new InputProcess(bool, KeyCode);
  */
 public class InputProcess 
 {
@@ -24,7 +26,7 @@ public class InputProcess
     private int mouseButton;
 
     //class constructor
-    public InputProcess(bool toggleMode, KeyCode keyCode) 
+    public InputProcess(bool toggleMode, KeyCode keyCode) //toggleMode true for toggle control
     {
         this.toggleMode = toggleMode;
         this.keyCode = keyCode;
@@ -52,6 +54,7 @@ public class InputProcess
         }
     }
 
+    // Method for toggled control
     private void TogglePress() 
     {
         if ( !isMouseButton )
@@ -82,6 +85,7 @@ public class InputProcess
         }
     }
 
+    // Method for on press control
     private void Press()
     {
         if ( !isMouseButton )
