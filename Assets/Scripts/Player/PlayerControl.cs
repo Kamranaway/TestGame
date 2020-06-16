@@ -11,7 +11,7 @@ using Vector2 = UnityEngine.Vector2;
  * 
  * Please tune Serialized Fields in unity editor as opposed to in file
  */
-public class PlayerControl: MonoBehaviour
+public class PlayerControl: Entity
 {
     [Range(0, 1)] [SerializeField] float speedFactor = 1; //Tune in context menu for desired player speed
     Crosshair crosshair;
