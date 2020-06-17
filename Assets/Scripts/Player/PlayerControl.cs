@@ -1,4 +1,5 @@
 ﻿
+using System.Dynamic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ using Vector2 = UnityEngine.Vector2;
  * 
  * Please tune Serialized Fields in unity editor as opposed to in file
  */
-public class PlayerControl: Entity
+public class PlayerControl: PlayerCharacter
 {
     [Range(0, 1)] [SerializeField] float speedFactor = 1; //Tune in context menu for desired player speed
     Crosshair crosshair;
@@ -122,7 +123,7 @@ public class PlayerControl: Entity
         mouse1.ProcessLoop();
         mouse2.ProcessLoop();
         leftCtrl.ProcessLoop();
-        Debug.Log(leftCtrl.inputToggle);
+        
     }
 
     /*
@@ -130,12 +131,6 @@ public class PlayerControl: Entity
      * Returns the player world position as an array of [x,y]
      * 
      */
-    public float[] GetPlayerPos()
-    {
-        float x = transform.position.x;
-        float y = transform.position.y;
-        float[] pos = { x, y };
-        return pos;
-    }
+     
 
 }

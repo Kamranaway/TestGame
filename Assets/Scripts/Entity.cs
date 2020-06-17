@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Entity : MonoBehaviour
+public abstract class Entity: MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public Entity()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public float[] GetEntityPos()
     {
-        
+        float x = transform.position.x;
+        float y = transform.position.y;
+        float[] pos = { x, y };
+        return pos;
     }
+
 }
