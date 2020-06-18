@@ -39,6 +39,13 @@ public class PlayerControl: PlayerCharacter
     void Start()
     { }
 
+    /*
+     * From UNITY Docs:
+     * "MonoBehaviour.FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls. Use Time.fixedDeltaTime to access this value. Alter it by setting it to your preferred value within a script, or, navigate to Edit > Settings > Time > Fixed Timestep and set it there. The FixedUpdate frequency is more or less than Update. If the application runs at 25 frames per second (fps), Unity calls it approximately twice per frame, Alternatively, 100 fps causes approximately two rendering frames with one FixedUpdate. Control the required frame rate and Fixed Timestep rate from Time settings. Use Application.targetFrameRate to set the frame rate."
+     */
+    private void FixedUpdate()
+    {
+    }
 
     /*
      * Update is called once per frame
@@ -47,17 +54,14 @@ public class PlayerControl: PlayerCharacter
      */
     void Update()
     {
-        InputProcesses();
-        MovePlayer();
         Attack();
     }
 
-    /*
-     * From UNITY Docs:
-     * "MonoBehaviour.FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls. Use Time.fixedDeltaTime to access this value. Alter it by setting it to your preferred value within a script, or, navigate to Edit > Settings > Time > Fixed Timestep and set it there. The FixedUpdate frequency is more or less than Update. If the application runs at 25 frames per second (fps), Unity calls it approximately twice per frame, Alternatively, 100 fps causes approximately two rendering frames with one FixedUpdate. Control the required frame rate and Fixed Timestep rate from Time settings. Use Application.targetFrameRate to set the frame rate."
-     */
-    private void FixedUpdate()
-    {   
+   
+    void LateUpdate()
+    {
+        InputProcesses();
+        MovePlayer();
     }
 
     /*
@@ -91,7 +95,9 @@ public class PlayerControl: PlayerCharacter
     }
 
     /*
-     * Skeleton for attack system; advise using another class 
+     * Skeleton for attack system
+     * 
+     * TEMPORARY, WILL BE REMOVED!!!
      */
     void Attack()
     {

@@ -12,6 +12,7 @@ public class OrbitalCam : MonoBehaviour
     private CinemachineOrbitalTransposer playerCamera;
     private float y;
     private float x;
+    public bool orbitEnabled = false;
 
 
     void Start()
@@ -22,7 +23,15 @@ public class OrbitalCam : MonoBehaviour
     }
     void Update()
     {
-        Orbit();
+        if ( orbitEnabled )
+        {
+            Orbit();
+        }
+        else
+        {
+            playerCamera.m_FollowOffset.x = 0;
+            playerCamera.m_FollowOffset.y = 0;
+        }
     }
 
     private void Orbit() 

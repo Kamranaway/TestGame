@@ -15,9 +15,13 @@ public class Crosshair : MonoBehaviour
     GameObject shortCursor;
     GameObject currentCursor;
     GameObject centerPivot;
+    OrbitalCam orbitalCam;
+    SpriteRenderer longCursorSprite;
+    SpriteRenderer shortCursorSprite;
     public float angleToPlayer = 0;
     PlayerControl playerControl;
     bool shortHand = false;
+    Vector2 lastCharPos = new Vector2(0,0);
     // Start is called before the first frame update
     private void Awake()
     {
@@ -28,6 +32,9 @@ public class Crosshair : MonoBehaviour
         shortCursor = GameObject.Find("Cursor_Short"); 
         longCursor = GameObject.Find("Cursor_Long");
         centerPivot = GameObject.Find("Char_Center");
+        orbitalCam = FindObjectOfType<OrbitalCam>();
+        longCursorSprite = longCursor.GetComponent<SpriteRenderer>();
+        shortCursorSprite = shortCursor.GetComponent<SpriteRenderer>();
     }
     void Start()
     {
@@ -39,26 +46,30 @@ public class Crosshair : MonoBehaviour
         {
             currentCursor = longCursor;
         }
+
+        shortCursorSprite.forceRenderingOff = true;
     }
 
+
+    private void FixedUpdate()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
     {
 
-        currentCursor = (playerControl.leftCtrl.inputToggle && currentCursor != shortCursor) ? shortCursor : 
-            (!playerControl.leftCtrl.inputToggle && currentCursor != longCursor) ? longCursor : currentCursor;
         
-        shortHand = (playerControl.leftCtrl.inputToggle && !shortHand) ? true :
-            (!playerControl.leftCtrl.inputToggle && shortHand) ? false : shortHand;
+       
+    
+    }
 
+    private void LateUpdate()
+    {
+        UpdateCursorAngle();
+        CheckCursorToggle();
         TranslateCrosshair();
-            if ( (playerControl.mouse1.inputDown || playerControl.mouse2.inputDown) )
-            {
-
-                playerControl.playerFaceAngle = angleToPlayer;
-
-            }
     }
 
     private void TranslateCrosshair() {
@@ -66,7 +77,7 @@ public class Crosshair : MonoBehaviour
         float mouseY = Input.GetAxis("Mouse Y");
         float XPrime = mouseX + currentCursor.transform.position.x;
         float YPrime = mouseY + currentCursor.transform.position.y;
-        Vector2 newPos = new Vector2(XPrime, YPrime);
+        Vector2 newPos = new Vector2(XPrime, YPrime) + ((Vector2) centerPivot.transform.position - lastCharPos);
         Vector2 centerPos = new Vector2 (centerPivot.transform.position.x, centerPivot.transform.position.y);
         float radius = Vector2.Distance(newPos, centerPos);
         angleToPlayer = Mathf.Atan2(newPos.y - centerPos.y, newPos.x - centerPos.x);
@@ -77,11 +88,17 @@ public class Crosshair : MonoBehaviour
         if ( radius > maxRadius && shortHand) 
         {
             Vector2 diff = newPos - centerPos; 
-            diff *= maxRadius / radius; 
+            diff *= maxRadius / radius;
+           
             newPos = centerPos + diff; 
         }
-   
-            currentCursor.transform.position = newPos;
+
+      /// newPos.x = newPos.x + (centerPivot.transform.position.x - lastCharPos.x);
+        // newPos.y = newPos.y + (centerPivot.transform.position.y - lastCharPos.y);
+
+       
+        currentCursor.transform.position = newPos;
+        lastCharPos = centerPivot.transform.position;
     }
 
     public float[] GetCursorPos()
@@ -92,14 +109,43 @@ public class Crosshair : MonoBehaviour
         return pos;
     }
 
-    public void MakeCursorShort()
+    private void UpdateCursorAngle()
     {
-        currentCursor = shortCursor;
+        if ( (playerControl.mouse1.inputDown || playerControl.mouse2.inputDown) )
+        {
+
+            playerControl.playerFaceAngle = angleToPlayer;
+
+        }
     }
 
-    public void MakeCursorLong()
+    private void CheckCursorToggle() 
     {
-        currentCursor = longCursor;
+        currentCursor = (playerControl.leftCtrl.inputToggle && currentCursor != shortCursor) ? shortCursor :
+              (!playerControl.leftCtrl.inputToggle && currentCursor != longCursor) ? longCursor : currentCursor;
+
+        shortHand = (playerControl.leftCtrl.inputToggle && !shortHand) ? true :
+            (!playerControl.leftCtrl.inputToggle && shortHand) ? false : shortHand;
+
+        if ( shortHand && !longCursorSprite.forceRenderingOff )
+        {
+            longCursor.transform.position = shortCursor.transform.position;
+            longCursorSprite.forceRenderingOff = true;
+            shortCursorSprite.forceRenderingOff = false;
+
+        }
+        else if ( !shortHand && longCursorSprite.forceRenderingOff )
+        {
+            shortCursor.transform.position = longCursor.transform.position;
+            longCursorSprite.forceRenderingOff = false;
+            shortCursorSprite.forceRenderingOff = true;
+        }
+
+        if ( orbitalCam.orbitEnabled != shortHand )
+        {
+            orbitalCam.orbitEnabled = shortHand;
+        }
     }
+
 
 }
