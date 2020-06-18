@@ -59,16 +59,13 @@ public class Crosshair : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        
-       
-    
+        UpdateCursorAngle();
+        CheckCursorToggle();
     }
 
     private void LateUpdate()
     {
-        UpdateCursorAngle();
-        CheckCursorToggle();
+        
         TranslateCrosshair();
     }
 
