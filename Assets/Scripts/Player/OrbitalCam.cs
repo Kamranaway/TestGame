@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 /*
- * Class responsible for handling orbital camera control
+ * Class responsible for handling orbital camera control.
  */
 public class OrbitalCam : MonoBehaviour
 {
@@ -15,13 +15,13 @@ public class OrbitalCam : MonoBehaviour
     public bool orbitEnabled = false;
 
 
-    void Start()
+   private void Start()
     {
         playerCamera = GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineOrbitalTransposer>();
         x = 0;
         y = 0;
     }
-    void Update()
+    private void Update()
     {
         if ( orbitEnabled )
         {

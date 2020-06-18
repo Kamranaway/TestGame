@@ -5,23 +5,20 @@ using UnityEngine;
 
 
 /*
- * Script responsible for handling sprite sorting order; attach to objects who may pass behind/in front of other objects
+ * Script responsible for handling sprite sorting order; attach to objects who may pass behind/in front of other objects.
  */
 [ExecuteAlways]
 public class SpriteSort : MonoBehaviour
 {
     [SerializeField] GameObject pivot;
-    Renderer renderer;
+    Renderer spriteRenderer;
     private void Awake()
     {
-        renderer = GetComponent<SpriteRenderer>(); 
+        spriteRenderer = GetComponent<SpriteRenderer>(); 
     }
-    // Update is called once per frame
+   
     void LateUpdate()
     {
-        renderer.sortingOrder = (int) (transform.position.y * -10);
-        Debug.Log(renderer.sortingOrder);
-        
-       
+        spriteRenderer.sortingOrder = (int) (transform.position.y * -10);
     }
 }

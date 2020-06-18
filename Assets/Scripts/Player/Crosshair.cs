@@ -6,7 +6,7 @@ using Vector2 = UnityEngine.Vector2;
 using Cursor = UnityEngine.Cursor;
 
 /*
- * Script responsible for crosshair control
+ * Script responsible for crosshair control and change.
  */
 public class Crosshair : MonoBehaviour
 {
@@ -22,7 +22,8 @@ public class Crosshair : MonoBehaviour
     PlayerControl playerControl;
     bool shortHand = false;
     Vector2 lastCharPos = new Vector2(0,0);
-    // Start is called before the first frame update
+ 
+
     private void Awake()
     {
         playerControl = FindObjectOfType<PlayerControl>();
@@ -36,6 +37,7 @@ public class Crosshair : MonoBehaviour
         longCursorSprite = longCursor.GetComponent<SpriteRenderer>();
         shortCursorSprite = shortCursor.GetComponent<SpriteRenderer>();
     }
+
     void Start()
     {
         if ( shortHand )
@@ -50,13 +52,11 @@ public class Crosshair : MonoBehaviour
         shortCursorSprite.forceRenderingOff = true;
     }
 
-
     private void FixedUpdate()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateCursorAngle();
@@ -69,6 +69,9 @@ public class Crosshair : MonoBehaviour
         TranslateCrosshair();
     }
 
+    /*
+     * Translates crosshair position based on mouse input.
+     */
     private void TranslateCrosshair() {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
@@ -89,15 +92,14 @@ public class Crosshair : MonoBehaviour
            
             newPos = centerPos + diff; 
         }
-
-      /// newPos.x = newPos.x + (centerPivot.transform.position.x - lastCharPos.x);
-        // newPos.y = newPos.y + (centerPivot.transform.position.y - lastCharPos.y);
-
        
         currentCursor.transform.position = newPos;
         lastCharPos = centerPivot.transform.position;
     }
 
+    /*
+     * Obtains position of the cursor
+     */
     public float[] GetCursorPos()
     {
         float x = currentCursor.transform.position.x;
@@ -106,16 +108,20 @@ public class Crosshair : MonoBehaviour
         return pos;
     }
 
+    /*
+     * Updates current cursor position
+     */
     private void UpdateCursorAngle()
     {
         if ( (playerControl.mouse1.inputDown || playerControl.mouse2.inputDown) )
         {
-
             playerControl.playerFaceAngle = angleToPlayer;
-
         }
     }
 
+    /*
+     * Checks and updates cursor toggle.
+     */
     private void CheckCursorToggle() 
     {
         currentCursor = (playerControl.leftCtrl.inputToggle && currentCursor != shortCursor) ? shortCursor :

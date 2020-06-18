@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Entity: MonoBehaviour
+/*
+ * 
+ * Abstract class that defines entities; enemy, player, animal, projectile, etc...
+ * Typically an object in the game work whose position will vary.
+ * 
+ */
+ public abstract class Entity: MonoBehaviour
 {
 
     public Entity()

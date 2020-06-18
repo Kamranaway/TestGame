@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script that causes a gameobject to follow the player. 
+ * 
+ * Used for Char_Center
+ */
 public class PlayerFollow : MonoBehaviour
 {
     PlayerControl playerControl;
