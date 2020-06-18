@@ -19,15 +19,14 @@ public class PlayerFollow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        float[] newPos = playerControl.GetEntityPos();
-        float newX = newPos[ 0 ];
-        float newY = newPos[ 1 ];
+        Vector2 newPos = playerControl.GetEntityPos();
+        float newX = newPos.x;
+        float newY = newPos.y;
         Vector2 translation = new Vector2(newX + offsetX, newY + offsetY);
         transform.position = translation;
 

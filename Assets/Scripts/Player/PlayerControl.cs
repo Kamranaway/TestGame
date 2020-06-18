@@ -19,12 +19,13 @@ public class PlayerControl: PlayerCharacter
     Animator animator;
     public Vector2 input;
     Rigidbody2D rb2d;
-    float max_speed = 1000;
+    float max_speed = 20;
     float speed = 0;
     public float playerFaceAngle = 0;
     public InputProcess leftCtrl = new InputProcess(true, KeyCode.LeftControl);
     public InputProcess mouse1 = new InputProcess(false, 0);
     public InputProcess mouse2 = new InputProcess(false, 1);
+    public InputProcess escape = new InputProcess(true, KeyCode.Escape);
 
     /*
      * Get and store components/objects of use 
@@ -35,38 +36,28 @@ public class PlayerControl: PlayerCharacter
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
     }
+
     // Start is called before the first frame update
     void Start()
     { }
 
-    /*
-     * From UNITY Docs:
-     * "MonoBehaviour.FixedUpdate has the frequency of the physics system; it is called every fixed frame-rate frame. Compute Physics system calculations after FixedUpdate. 0.02 seconds (50 calls per second) is the default time between calls. Use Time.fixedDeltaTime to access this value. Alter it by setting it to your preferred value within a script, or, navigate to Edit > Settings > Time > Fixed Timestep and set it there. The FixedUpdate frequency is more or less than Update. If the application runs at 25 frames per second (fps), Unity calls it approximately twice per frame, Alternatively, 100 fps causes approximately two rendering frames with one FixedUpdate. Control the required frame rate and Fixed Timestep rate from Time settings. Use Application.targetFrameRate to set the frame rate."
-     */
     private void FixedUpdate()
     {
+        MovePlayer();
     }
 
-    /*
-     * Update is called once per frame
-     * 
-     * Currently Updates inputs and player movements; based on CPU
-     */
     void Update()
     {
-        Attack();
+        GeneralControl();
     }
 
    
     void LateUpdate()
     {
         InputProcesses();
-        MovePlayer();
+       
     }
 
-    /*
-     * Method responsible for player positioning based on inputs
-     */
     private void MovePlayer()
     {
 
@@ -89,35 +80,20 @@ public class PlayerControl: PlayerCharacter
 
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         speed = Mathf.Clamp(input.magnitude, 0, 1);
-        Debug.Log(speed);
+        
 
-        rb2d.velocity = input * speedFactor * Time.deltaTime * max_speed; // Multiplied by time to be functionally independent of frame rate
+        rb2d.velocity = input * speedFactor * max_speed; // Multiplied by time to be functionally independent of frame rate
     }
 
-    /*
-     * Skeleton for attack system
-     * 
-     * TEMPORARY, WILL BE REMOVED!!!
-     */
-    void Attack()
+    void GeneralControl()
     {
-        if ( mouse1.inputDown )
+        if ( escape.inputToggle )
         {
-            animator.SetBool("fireL", true);
-
+            PauseGame();
         }
         else
         {
-            animator.SetBool("fireL", false);
-        }
-
-        if ( mouse2.inputDown )
-        {
-            animator.SetBool("fireR", true);
-        }
-        else
-        {
-            animator.SetBool("fireR", false);
+            ResumeGame();
         }
     }
 

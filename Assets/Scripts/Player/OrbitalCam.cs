@@ -42,7 +42,17 @@ public class OrbitalCam : MonoBehaviour
         x = Mathf.Clamp(x, -maxOrbit, maxOrbit);
         y = Mathf.Clamp(y, -maxOrbit, maxOrbit);
 
-       
+       /* Vector2 centerPos = new Vector2(centerPivot.transform.position.x, centerPivot.transform.position.y);
+        float radius = Vector2.Distance(newPos, centerPos);
+        float maxRadius = 1;
+        if ( radius > maxRadius )
+        {
+            Vector2 diff = newPos - centerPos;
+            diff *= maxRadius / radius;
+
+            newPos = centerPos + diff;
+        }*/
+
 
         playerCamera.m_FollowOffset.x = -x;
         playerCamera.m_FollowOffset.y = -y;

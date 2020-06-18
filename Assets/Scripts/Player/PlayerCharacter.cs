@@ -2,17 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/*
+ * ABSTRACT
+ * DO NOT ADD THIS SCRIPT TO A GAME OBJECT
+ * 
+ * Inherited by scripts related to the player.
+ * 
+ * Not inherited by scripts unrelated to the player.
+ */
 public abstract class PlayerCharacter : Entity
 {
-   [Range(0f, 100f)] [SerializeField] public float mana = 100;
-    [Range(0f, 100f)] [SerializeField] public float health = 100;
+    //Crosshair crosshair
+
     public PlayerCharacter() 
     { 
     
     }
 
-    public void Update()
+    public void StartDeathState()
+    { 
+    
+    }
+
+    public void PauseGame()
     {
-        Debug.Log("check");
+        
+    }
+
+    public void ResumeGame()
+    {
+       
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Vector2 = UnityEngine.Vector2;
 using Cursor = UnityEngine.Cursor;
+using Cinemachine;
+using Vector3 = UnityEngine.Vector3;
 
 /*
  * Script responsible for crosshair control and change.
@@ -11,10 +13,13 @@ using Cursor = UnityEngine.Cursor;
 public class Crosshair : MonoBehaviour
 {
     [SerializeField] float maxRadius = 1;
+    [Range(0f,10f)][SerializeField] float mouseBorderOffsetX = 0;
+    [Range(0f, 10f)][SerializeField] float mouseBorderOffsetY = 0;
     GameObject longCursor;
     GameObject shortCursor;
     GameObject currentCursor;
     GameObject centerPivot;
+    Camera playerCamera;
     OrbitalCam orbitalCam;
     SpriteRenderer longCursorSprite;
     SpriteRenderer shortCursorSprite;
@@ -36,6 +41,7 @@ public class Crosshair : MonoBehaviour
         orbitalCam = FindObjectOfType<OrbitalCam>();
         longCursorSprite = longCursor.GetComponent<SpriteRenderer>();
         shortCursorSprite = shortCursor.GetComponent<SpriteRenderer>();
+        playerCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
 
     void Start()
@@ -92,7 +98,15 @@ public class Crosshair : MonoBehaviour
            
             newPos = centerPos + diff; 
         }
-       
+
+        float Xmin = playerCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
+        float Xmax = playerCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+        float Ymin = playerCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y;
+        float Ymax = playerCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y;
+
+        newPos.x = Mathf.Clamp(newPos.x, Xmin+mouseBorderOffsetX, Xmax-mouseBorderOffsetX); //temporary solution
+        newPos.y = Mathf.Clamp(newPos.y, Ymin+mouseBorderOffsetY, Ymax-mouseBorderOffsetY); //temporary solution
+
         currentCursor.transform.position = newPos;
         lastCharPos = centerPivot.transform.position;
     }
@@ -100,16 +114,15 @@ public class Crosshair : MonoBehaviour
     /*
      * Obtains position of the cursor
      */
-    public float[] GetCursorPos()
+    public Vector2 GetCursorPos()
     {
         float x = currentCursor.transform.position.x;
         float y = currentCursor.transform.position.y;
-        float[] pos = { x, y };
-        return pos;
+        return new Vector2(x,y);
     }
 
     /*
-     * Updates current cursor position
+     * Updates current cursor angle relative to the player
      */
     private void UpdateCursorAngle()
     {
@@ -130,14 +143,14 @@ public class Crosshair : MonoBehaviour
         shortHand = (playerControl.leftCtrl.inputToggle && !shortHand) ? true :
             (!playerControl.leftCtrl.inputToggle && shortHand) ? false : shortHand;
 
-        if ( shortHand && !longCursorSprite.forceRenderingOff )
+        if ( shortHand )
         {
             longCursor.transform.position = shortCursor.transform.position;
             longCursorSprite.forceRenderingOff = true;
             shortCursorSprite.forceRenderingOff = false;
 
         }
-        else if ( !shortHand && longCursorSprite.forceRenderingOff )
+        else
         {
             shortCursor.transform.position = longCursor.transform.position;
             longCursorSprite.forceRenderingOff = false;
