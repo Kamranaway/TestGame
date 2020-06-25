@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellControl : PlayerCharacter
+public class SpellControl : MonoBehaviour
 {
 
     PlayerControl playerControl;
     Animator animator;
+    [SerializeField] GameObject[] spells;
+    [SerializeField] GameObject leftSpell;
+    [SerializeField] GameObject rightSpell;
 
     private void Awake()
     {
         playerControl = FindObjectOfType<PlayerControl>();
-        animator = FindObjectOfType<PlayerControl>().GetComponent<Animator>();
+        animator = FindObjectOfType<PlayerMovement>().GetComponent<Animator>();
+        leftSpell = spells[ 0 ];
     }
     // Start is called before the first frame update
     void Start()
@@ -22,7 +26,7 @@ public class SpellControl : PlayerCharacter
     // Update is called once per frame
     void Update()
     {
-        if (playerControl.mouse1.instantInputDown ) 
+        if (playerControl.fireR.inputDown ) 
         {
             Debug.Log("input down");
         }
@@ -32,7 +36,9 @@ public class SpellControl : PlayerCharacter
         // Debug.Log(playerControl.mouse1.instantInputUp);
         //Debug.Log(playerControl.mouse1.instantInputDown);
 
-        if ( playerControl.mouse1.inputDown )
+
+
+        if ( playerControl.fireR.inputDown )
         {
             animator.SetBool("fireL", true);
 
@@ -42,7 +48,7 @@ public class SpellControl : PlayerCharacter
             animator.SetBool("fireL", false);
         }
 
-        if ( playerControl.mouse2.inputDown )
+        if ( playerControl.fireL.inputDown )
         {
             animator.SetBool("fireR", true);
         }

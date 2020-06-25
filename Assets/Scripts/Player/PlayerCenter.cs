@@ -7,14 +7,14 @@ using UnityEngine;
  * 
  * Used for Char_Center
  */
-public class PlayerFollow : MonoBehaviour
+public class PlayerCenter : MonoBehaviour
 {
-    PlayerControl playerControl;
+    PlayerMovement playerMovement;
     [SerializeField] float offsetX = 0;
     [SerializeField] float offsetY = 0;
     private void Awake()
     {
-        playerControl = FindObjectOfType<PlayerControl>();
+        playerMovement = FindObjectOfType<PlayerMovement>();
     }
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class PlayerFollow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 newPos = playerControl.GetEntityPos();
+        Vector2 newPos = playerMovement.GetPlayerPos();
         float newX = newPos.x;
         float newY = newPos.y;
         Vector2 translation = new Vector2(newX + offsetX, newY + offsetY);
