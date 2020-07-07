@@ -54,14 +54,13 @@ public class OrbitalCam : MonoBehaviour
         Vector2 centerPos = new Vector2(0, 0);
         Vector2 newPos = new Vector2(x, y);
         float radius = Vector2.Distance(newPos, centerPos);
-        Debug.Log(radius);
+      
    
 
         if ( radius > maxRadius )
         {
             Vector2 diff = newPos - centerPos;
             diff *= maxRadius / radius;
-
             newPos = centerPos + diff;
         }
 

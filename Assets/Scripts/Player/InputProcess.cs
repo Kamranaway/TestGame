@@ -18,7 +18,10 @@ public class InputProcess
     public bool inputToggle = false;
     //true for only the instant of a given trigger frame
     public bool instantInputUp = false; 
-    public bool instantInputDown = false; 
+    public bool instantInputDown = false;
+
+    public string name;
+
 
     private bool toggleMode;
     private KeyCode keyCode;
@@ -26,18 +29,20 @@ public class InputProcess
     private int mouseButton;
 
     //class constructor
-    public InputProcess(bool toggleMode, KeyCode keyCode) //toggleMode true for toggle control
+    public InputProcess(string name, bool toggleMode, KeyCode keyCode) //toggleMode true for toggle control
     {
         this.toggleMode = toggleMode;
         this.keyCode = keyCode;
         this.isMouseButton = false;
+        this.name = name;
     }
     
-    public InputProcess(bool toggleMode, int mouseButton)
+    public InputProcess(string inputName, bool toggleMode, int mouseButton)
     {
         this.toggleMode = toggleMode;
         this.mouseButton = mouseButton;
         this.isMouseButton = true;
+        this.name = inputName;
     }
 
 

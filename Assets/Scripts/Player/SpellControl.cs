@@ -1,57 +1,58 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellControl : PlayerCharacter
+public class SpellControl : MonoBehaviour
 {
 
     PlayerControl playerControl;
     Animator animator;
+    [SerializeField] GameObject[] spells;
+    [SerializeField] GameObject leftSpell;
+    [SerializeField] GameObject rightSpell;
+    public bool instantFireL = false;
+    public bool constantFireL = false;
+    public bool instantFireR = false;
+    public bool constantFireR = false;
+    
 
     private void Awake()
     {
         playerControl = FindObjectOfType<PlayerControl>();
-        animator = FindObjectOfType<PlayerControl>().GetComponent<Animator>();
+        animator = FindObjectOfType<PlayerMovement>().GetComponent<Animator>();
+        //leftSpell = spells[ 0 ];
+        //rightSpell = spells[ 1 ];
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerControl.mouse1.instantInputDown ) 
-        {
-            Debug.Log("input down");
-        }
+      //  leftSpell.GetComponent<Spell>().
 
-        // Debug.Log(playerControl.mouse1.inputUp);
-        //  Debug.Log(playerControl.mouse1.inputToggle);
-        // Debug.Log(playerControl.mouse1.instantInputUp);
-        //Debug.Log(playerControl.mouse1.instantInputDown);
 
-        if ( playerControl.mouse1.inputDown )
-        {
-            animator.SetBool("fireL", true);
-
-        }
-        else
-        {
-            animator.SetBool("fireL", false);
-        }
-
-        if ( playerControl.mouse2.inputDown )
-        {
-            animator.SetBool("fireR", true);
-        }
-        else
-        {
-            animator.SetBool("fireR", false);
-        }
+        constantFireR = playerControl.fireR.inputDown;
+        instantFireR = playerControl.fireR.instantInputDown;
+        constantFireL = playerControl.fireL.inputDown;
+        instantFireL = playerControl.fireL.instantInputDown;
+      
+        AnimationUpdate();
     }
 
+    void AnimationUpdate() 
+    {
+
+
+        animator.SetBool("fireR", constantFireR);
+
+        animator.SetBool("fireL", constantFireL);
+   
+    }
     private void LateUpdate()
     {
         
