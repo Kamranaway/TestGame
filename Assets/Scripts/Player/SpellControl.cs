@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellControl : MonoBehaviour
+public class SpellControl : SpellScript
 {
-
     PlayerControl playerControl;
     Animator animator;
     [SerializeField] GameObject[] spells;
     [SerializeField] GameObject leftSpell;
     [SerializeField] GameObject rightSpell;
-    public bool instantFireL = false;
-    public bool constantFireL = false;
-    public bool instantFireR = false;
-    public bool constantFireR = false;
+    InputProcess constantFireR;
+    InputProcess constantFireL;
+    InputProcess instantFireR;
+    InputProcess instantFireL;
     
 
     private void Awake()
@@ -27,7 +26,10 @@ public class SpellControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-    
+        constantFireR = playerControl.constantFireR;
+        constantFireL = playerControl.constantFireL;
+        instantFireR = playerControl.instantFireR;
+        instantFireL = playerControl.instantFireL;
     }
 
     // Update is called once per frame
@@ -36,10 +38,7 @@ public class SpellControl : MonoBehaviour
       //  leftSpell.GetComponent<Spell>().
 
 
-        constantFireR = playerControl.fireR.inputDown;
-        instantFireR = playerControl.fireR.instantInputDown;
-        constantFireL = playerControl.fireL.inputDown;
-        instantFireL = playerControl.fireL.instantInputDown;
+
       
         AnimationUpdate();
     }
@@ -48,9 +47,9 @@ public class SpellControl : MonoBehaviour
     {
 
 
-        animator.SetBool("fireR", constantFireR);
+        animator.SetBool("fireR", constantFireR.inputDown);
 
-        animator.SetBool("fireL", constantFireL);
+        animator.SetBool("fireL", constantFireL.inputDown);
    
     }
     private void LateUpdate()

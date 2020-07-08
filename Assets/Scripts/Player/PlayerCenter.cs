@@ -7,7 +7,7 @@ using UnityEngine;
  * 
  * Used for Char_Center
  */
-public class PlayerCenter : MonoBehaviour
+public class PlayerCenter : PlayerScript
 {
     PlayerMovement playerMovement;
     [SerializeField] float offsetX = 0;

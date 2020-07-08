@@ -5,7 +5,7 @@ using UnityEngine;
 /*
  * META data for spell
  */
-public class Spell : MonoBehaviour
+public class Spell : SpellScript
 {
     [SerializeField] public int id;
     [SerializeField] public float manaCost;
@@ -17,7 +17,7 @@ public class Spell : MonoBehaviour
     [SerializeField] public SpellType spellType;
     [SerializeField] public TargetingType targetingType;
 
-    public  enum SpellType
+    public enum SpellType
     {
         Healing,
         Mobility,

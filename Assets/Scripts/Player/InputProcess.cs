@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 /*
@@ -8,48 +9,51 @@ using UnityEngine.UIElements;
  * Any instance of InputProcess must be called in the Update method of a script.
  * 
  * Declaration goes as follows:
- * InputProcess myInput = new InputProcess(bool, KeyCode);
+ * InputProcess myInput = new InputProcess(name, bool, KeyCode);
  */
 public class InputProcess 
 {
-    //persistently true if condition is met
-    public bool inputUp = false;
-    public bool inputDown = false;
-    public bool inputToggle = false;
-    //true for only the instant of a given trigger frame
-    public bool instantInputUp = false; 
-    public bool instantInputDown = false;
+    public bool inputUp = false; //True for given input type on up press
+    public bool inputDown = false; //True for given input type on down press
+
+    private bool inputUpConst = false;
+    private bool inputDownConst = false;
+    private bool inputToggle = false;
+
+    
+    private bool instantInputUp = false; 
+    private bool instantInputDown = false;
 
     public string name;
 
 
-    private bool toggleMode;
-    private KeyCode keyCode;
+    private InputType inputType;
+    public KeyCode keyCode;
     private bool isMouseButton;
-    private int mouseButton;
+    public int mouseButton;
 
     //class constructor
-    public InputProcess(string name, bool toggleMode, KeyCode keyCode) //toggleMode true for toggle control
+    public InputProcess(string name, InputType inputType, KeyCode keyCode) //toggleMode true for toggle control
     {
-        this.toggleMode = toggleMode;
+        this.inputType = inputType;
         this.keyCode = keyCode;
         this.isMouseButton = false;
         this.name = name;
     }
-    
-    public InputProcess(string inputName, bool toggleMode, int mouseButton)
+
+    public InputProcess(string inputName, InputType inputType, int mouseButton)
     {
-        this.toggleMode = toggleMode;
+        this.inputType = inputType;
         this.mouseButton = mouseButton;
         this.isMouseButton = true;
         this.name = inputName;
     }
 
-
     //must be called in Update method 
     public void ProcessLoop() 
     {
-        if ( toggleMode ) 
+
+        if ( inputType == InputType.TOGGLE ) 
         { 
             TogglePress(); 
         } 
@@ -57,82 +61,96 @@ public class InputProcess
         { 
             Press(); 
         }
+
+        switch ( inputType )
+        {
+            case InputType.INSTANT:
+                inputUp = instantInputUp;
+                inputDown = instantInputDown;
+                break;
+            case InputType.CONSTANT:
+                inputUp = inputUpConst;
+                inputDown = inputDownConst;
+                break;
+            case InputType.TOGGLE:
+                inputUp = !inputToggle;
+                inputDown = inputToggle;
+                break;
+        }
+
     }
 
     // Method for toggled control
     private void TogglePress() 
     {
-        if ( !isMouseButton )
+        switch ( isMouseButton )
         {
-            if ( Input.GetKeyDown(keyCode) && !inputToggle )
-            {
+            case false when Input.GetKeyDown(keyCode) && !inputToggle:
                 inputToggle = true;
-                inputUp = false;
-            }
-            else if ( Input.GetKeyDown(keyCode) && inputToggle && !inputUp )
-            {
+                inputUpConst = false;
+                inputUpConst = (Input.GetKeyUp(keyCode) && !inputUpConst && inputToggle) ? true : false;
+                break;
+            case false when Input.GetKeyDown(keyCode) && inputToggle && !inputUpConst:
                 inputToggle = false;
-            }
-            inputUp = (Input.GetKeyUp(keyCode) && !inputUp && inputToggle) ? true : false;
-        }
-        else 
-        {
-            if ( Input.GetMouseButtonDown(mouseButton) && !inputToggle )
-            {
+                inputUpConst = (Input.GetKeyUp(keyCode) && !inputUpConst && inputToggle) ? true : false;
+                break;
+            case true when Input.GetMouseButtonDown(mouseButton) && !inputToggle:
                 inputToggle = true;
-                inputUp = false;
-            }
-            else if ( Input.GetMouseButtonDown(mouseButton) && inputToggle && !inputUp )
-            {
+                inputUpConst = false;
+                inputUpConst = (Input.GetMouseButtonUp(mouseButton) && !inputUpConst && inputToggle) ? true : false;
+                break;
+            case true when Input.GetMouseButtonDown(mouseButton) && inputToggle && !inputUpConst:
                 inputToggle = false;
-            }
-            inputUp = (Input.GetMouseButtonUp(mouseButton) && !inputUp && inputToggle) ? true : false;
+                inputUpConst = (Input.GetMouseButtonUp(mouseButton) && !inputUpConst && inputToggle) ? true : false;
+                break;
+            default:
+                break;
         }
+      
     }
 
     // Method for on press control
     private void Press()
     {
-        if ( !isMouseButton )
+   
+        switch ( isMouseButton )
         {
-            if ( Input.GetKeyDown(keyCode) )
-            {
-                this.inputDown = true;
-                this.inputUp = false;
-            }
-            else if ( Input.GetKeyUp(keyCode) )
-            {
-                this.inputDown = false;
-                this.inputUp = true;
-            }
-            else
-            {
-                this.inputUp = false;
-            }
-            
-            
-        }
-        else
-        {
-
-            if ( Input.GetMouseButtonDown(mouseButton) )
-            {
-                this.inputDown = true;
-                this.inputUp = false;
+            case false when Input.GetKeyDown(keyCode) && !Input.GetKeyUp(keyCode):
+                this.inputDownConst = true;
+                this.inputUpConst = false;
                 this.instantInputDown = true;
-            }
-            else if ( Input.GetMouseButtonUp(mouseButton) )
-            {
-                this.inputDown = false;
-                this.inputUp = true;
+                break;
+            case false when !Input.GetKeyDown(keyCode) && Input.GetKeyUp(keyCode):
+                this.inputDownConst = false;
+                this.inputUpConst = true;
                 this.instantInputUp = true;
-            }
-            else
-            {
+                break;
+            case true when Input.GetMouseButtonDown(mouseButton) && !Input.GetMouseButtonUp(mouseButton):
+                this.inputDownConst = true;
+                this.inputUpConst = false;
+                this.instantInputDown = true;
+                break;
+            case true when !Input.GetMouseButtonDown(mouseButton) && Input.GetMouseButtonUp(mouseButton):
+                this.inputDownConst = false;
+                this.inputUpConst = true;
+                this.instantInputUp = true;
+                break;
+            default:
                 this.instantInputUp = false;
                 this.instantInputDown = false;
-            }
-
+                break;
         }
+    }
+
+    /*
+     * TOGGLE: True on input toggle
+     * INSTANT: True on frame of input
+     * CONSTANT: True on all frames of input
+     **/ 
+    public enum InputType 
+    { 
+        TOGGLE,
+        INSTANT,
+        CONSTANT,
     }
 }

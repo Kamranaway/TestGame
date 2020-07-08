@@ -7,7 +7,7 @@ using Vector2 = UnityEngine.Vector2;
 /*
  * Class responsible for handling orbital camera control.
  */
-public class OrbitalCam : MonoBehaviour
+public class OrbitalCam : PlayerScript
 {
     [SerializeField] private float sensitivity = .25f;
     [SerializeField] private float maxOrbit = 2;

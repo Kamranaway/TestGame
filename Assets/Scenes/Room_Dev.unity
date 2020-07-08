@@ -723,7 +723,6 @@ GameObject:
   m_Component:
   - component: {fileID: 443637648}
   - component: {fileID: 443637652}
-  - component: {fileID: 443637651}
   - component: {fileID: 443637650}
   - component: {fileID: 443637649}
   m_Layer: 0
@@ -799,19 +798,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &443637651
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443637647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301a5c040ad636d47b30b14d5be58ccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 0}
 --- !u!212 &443637652
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1210,7 +1196,6 @@ GameObject:
   m_Component:
   - component: {fileID: 558669580}
   - component: {fileID: 558669584}
-  - component: {fileID: 558669583}
   - component: {fileID: 558669582}
   - component: {fileID: 558669581}
   m_Layer: 0
@@ -1286,19 +1271,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &558669583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558669579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301a5c040ad636d47b30b14d5be58ccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 0}
 --- !u!212 &558669584
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2853,7 +2825,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1617261015}
   - component: {fileID: 1617261019}
-  - component: {fileID: 1617261018}
   - component: {fileID: 1617261017}
   - component: {fileID: 1617261016}
   m_Layer: 0
@@ -2935,19 +2906,6 @@ PolygonCollider2D:
       - {x: 0.35309196, y: -0.004212737}
       - {x: 0.3841536, y: 0.03458911}
       - {x: 0.38660884, y: 0.16139346}
---- !u!114 &1617261018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1617261014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301a5c040ad636d47b30b14d5be58ccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 0}
 --- !u!212 &1617261019
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3049,7 +3007,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1985025893}
   - component: {fileID: 1985025896}
-  - component: {fileID: 1985025895}
   - component: {fileID: 1985025894}
   - component: {fileID: 1985025897}
   m_Layer: 0
@@ -3104,19 +3061,6 @@ PolygonCollider2D:
       - {x: 0.13941121, y: -0.50581074}
       - {x: 0.33547497, y: -0.5}
       - {x: 0.3354752, y: 0.26640278}
---- !u!114 &1985025895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985025892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 301a5c040ad636d47b30b14d5be58ccf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pivot: {fileID: 0}
 --- !u!212 &1985025896
 SpriteRenderer:
   m_ObjectHideFlags: 0

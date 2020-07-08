@@ -2,9 +2,8 @@
 using System.Dynamic;
 using System.Numerics;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
-using Vector2 = UnityEngine.Vector2;
+using InputType = InputProcess.InputType;
 
 /*
  * 
@@ -12,14 +11,16 @@ using Vector2 = UnityEngine.Vector2;
  * 
  * Please tune Serialized Fields in unity editor as opposed to in file
  */
-public class PlayerControl: MonoBehaviour
+public class PlayerControl: PlayerScript
 {
  
-    public InputProcess toggleCursor = new InputProcess("Cursor Toggle" ,true, KeyCode.LeftControl);
-    public InputProcess menu = new InputProcess("Menu", true, KeyCode.Escape);
-    public InputProcess fireR = new InputProcess("FireR", false, 0);
-    public InputProcess fireL = new InputProcess("FireL", false, 1);
-  
+    public InputProcess toggleCursor = new InputProcess("Cursor Toggle" , InputType.TOGGLE, KeyCode.LeftControl);
+    public InputProcess menu = new InputProcess("Menu", InputType.TOGGLE, KeyCode.Escape);
+    public InputProcess constantFireR = new InputProcess("FireR", InputType.CONSTANT, (int) MouseButton.RightMouse);
+    public InputProcess constantFireL = new InputProcess("FireL", InputType.CONSTANT, (int) MouseButton.LeftMouse);
+    public InputProcess instantFireR = new InputProcess("FireR", InputType.INSTANT, (int) MouseButton.RightMouse);
+    public InputProcess instantFireL = new InputProcess("FireL", InputType.INSTANT, (int) MouseButton.LeftMouse);
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +42,7 @@ public class PlayerControl: MonoBehaviour
 
     void GeneralControl()
     {
-        if ( menu.inputToggle )
+        if ( menu.inputDown )
         {
             //PauseGame();
         }
@@ -56,8 +57,8 @@ public class PlayerControl: MonoBehaviour
      */
     void InputProcesses()
     {
-        fireR.ProcessLoop();
-        fireL.ProcessLoop();
+        constantFireR.ProcessLoop();
+        constantFireL.ProcessLoop();
         toggleCursor.ProcessLoop();
         
     }

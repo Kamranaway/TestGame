@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : PlayerScript
 {
     [Range(0, 1)] [SerializeField] float speedFactor = 1; //Tune in context menu for desired player speed
     Crosshair crosshair;

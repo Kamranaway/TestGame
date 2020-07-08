@@ -13,7 +13,7 @@ using UnityEngine.Experimental.Rendering;
  * 
  * This code is a mess, I will fix it later :p
  */
-public class Crosshair : MonoBehaviour
+public class Crosshair : PlayerScript
 {
     [SerializeField] float maxRadius = 1;
     GameObject longCursor;
@@ -62,9 +62,10 @@ public class Crosshair : MonoBehaviour
         else
         {
             currentCursor = longCursor;
+            shortCursorSprite.forceRenderingOff = true;
         }
 
-        shortCursorSprite.forceRenderingOff = true;
+        
     }
 
     private void FixedUpdate()
@@ -89,10 +90,6 @@ public class Crosshair : MonoBehaviour
      */
     private void TranslateCrosshair()
     {
-
-
-
-
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
         float XPrime = mouseX + currentCursor.transform.position.x;
@@ -151,7 +148,7 @@ public class Crosshair : MonoBehaviour
      */
     private void UpdateCursorAngle()
     {
-        if ( (playerControl.fireR.inputDown || playerControl.fireL.inputDown) )
+        if ( (playerControl.constantFireR.inputDown || playerControl.constantFireL.inputDown) )
         {
             playerMovement.playerFaceAngle = angleToPlayer;
         }
@@ -162,11 +159,11 @@ public class Crosshair : MonoBehaviour
      */
     private void CheckCursorToggle() 
     {
-        currentCursor = (playerControl.toggleCursor.inputToggle && currentCursor != shortCursor) ? shortCursor :
-              (!playerControl.toggleCursor.inputToggle && currentCursor != longCursor) ? longCursor : currentCursor;
+        currentCursor = (playerControl.toggleCursor.inputDown && currentCursor != shortCursor) ? shortCursor :
+              (!playerControl.toggleCursor.inputDown && currentCursor != longCursor) ? longCursor : currentCursor;
 
-        shortHand = (playerControl.toggleCursor.inputToggle && !shortHand) ? true :
-            (!playerControl.toggleCursor.inputToggle && shortHand) ? false : shortHand;
+        shortHand = (playerControl.toggleCursor.inputDown && !shortHand) ? true :
+            (!playerControl.toggleCursor.inputDown && shortHand) ? false : shortHand;
 
         if ( shortHand )
         {
