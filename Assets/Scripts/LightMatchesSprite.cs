@@ -4,7 +4,7 @@ using UnityEngine;
 using Light2D = UnityEngine.Experimental.Rendering.Universal.Light2D;
 
 [ExecuteInEditMode]
-public class LightMatchesSprite : MonoBehaviour
+public class LightMatchesSprite : UnityEngine.MonoBehaviour
 {
     Light2D light2D;
     SpriteRenderer spriteRenderer;

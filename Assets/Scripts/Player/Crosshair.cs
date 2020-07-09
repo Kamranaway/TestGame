@@ -10,10 +10,8 @@ using UnityEngine.Experimental.Rendering;
 
 /*
  * Script responsible for crosshair control and change.
- * 
- * This code is a mess, I will fix it later :p
  */
-public class Crosshair : PlayerScript
+public class Crosshair : MonoBehaviour
 {
     [SerializeField] float maxRadius = 1;
     GameObject longCursor;

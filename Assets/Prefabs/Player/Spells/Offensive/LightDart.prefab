@@ -43,8 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9fb64ef0ab2ad45ab4deaa6544608d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
   manaCost: 1
   name: Light Dart
-  texture: {fileID: 0}
-  spellType: 2
+  icon: {fileID: 0}
+  useSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
+  spellType: 3
+  targetingType: 0

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : PlayerScript
+public class PlayerStats : MonoBehaviour
 {
 
     [Range(0f, 100f)] [SerializeField] public float mana = 100;

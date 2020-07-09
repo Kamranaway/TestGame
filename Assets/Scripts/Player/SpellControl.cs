@@ -3,25 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellControl : SpellScript
+public class SpellControl : MonoBehaviour
 {
     PlayerControl playerControl;
     Animator animator;
     [SerializeField] GameObject[] spells;
     [SerializeField] GameObject leftSpell;
     [SerializeField] GameObject rightSpell;
-    InputProcess constantFireR;
-    InputProcess constantFireL;
-    InputProcess instantFireR;
-    InputProcess instantFireL;
+    public InputProcess constantFireR;
+    public InputProcess constantFireL;
+    public InputProcess instantFireR;
+    public InputProcess instantFireL;
+    
     
 
     private void Awake()
     {
         playerControl = FindObjectOfType<PlayerControl>();
         animator = FindObjectOfType<PlayerMovement>().GetComponent<Animator>();
-        //leftSpell = spells[ 0 ];
-        //rightSpell = spells[ 1 ];
+       
     }
     // Start is called before the first frame update
     void Start()
@@ -35,12 +35,19 @@ public class SpellControl : SpellScript
     // Update is called once per frame
     void Update()
     {
-      //  leftSpell.GetComponent<Spell>().
+        
+        SpellSwitch();
 
 
 
       
         AnimationUpdate();
+        Debug.Log(instantFireR.inputDown);
+    }
+
+    void SpellSwitch() 
+    {
+       
     }
 
     void AnimationUpdate() 

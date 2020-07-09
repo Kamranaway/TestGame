@@ -11,7 +11,7 @@ using InputType = InputProcess.InputType;
  * 
  * Please tune Serialized Fields in unity editor as opposed to in file
  */
-public class PlayerControl: PlayerScript
+public class PlayerControl: MonoBehaviour
 {
  
     public InputProcess toggleCursor = new InputProcess("Cursor Toggle" , InputType.TOGGLE, KeyCode.LeftControl);
@@ -59,6 +59,8 @@ public class PlayerControl: PlayerScript
     {
         constantFireR.ProcessLoop();
         constantFireL.ProcessLoop();
+        instantFireL.ProcessLoop();
+        instantFireR.ProcessLoop();
         toggleCursor.ProcessLoop();
         
     }
