@@ -13,32 +13,39 @@ using InputType = InputProcess.InputType;
  */
 public class PlayerControl: MonoBehaviour
 {
- 
+    public Animator animator;
+
+    //See Input Process for description of input types
     public InputProcess toggleCursor = new InputProcess("Cursor Toggle" , InputType.TOGGLE, KeyCode.LeftControl);
     public InputProcess menu = new InputProcess("Menu", InputType.TOGGLE, KeyCode.Escape);
-    public InputProcess constantFireR = new InputProcess("FireR", InputType.CONSTANT, (int) MouseButton.RightMouse);
-    public InputProcess constantFireL = new InputProcess("FireL", InputType.CONSTANT, (int) MouseButton.LeftMouse);
-    public InputProcess instantFireR = new InputProcess("FireR", InputType.INSTANT, (int) MouseButton.RightMouse);
-    public InputProcess instantFireL = new InputProcess("FireL", InputType.INSTANT, (int) MouseButton.LeftMouse);
+    public InputProcess constantFireR = new InputProcess("Constant FireR", InputType.CONSTANT, (int) MouseButton.RightMouse);
+    public InputProcess constantFireL = new InputProcess("Constant FireL", InputType.CONSTANT, (int) MouseButton.LeftMouse);
+    public InputProcess instantFireR = new InputProcess("Instant FireR", InputType.INSTANT, (int) MouseButton.RightMouse);
+    public InputProcess instantFireL = new InputProcess("Instant FireL", InputType.INSTANT, (int) MouseButton.LeftMouse);
+    public InputProcess shiftLeftSpell = new InputProcess("Shift Left Spell", InputType.INSTANT, KeyCode.Q);
+    public InputProcess shiftRightSpell = new InputProcess("Shift Right Spell", InputType.INSTANT, KeyCode.R);
 
+    private void Awake()
+    {
+        animator = FindObjectOfType<PlayerMovement>().GetComponent<Animator>();
+    }
 
-    // Start is called before the first frame update
     void Start()
     { }
 
     void Update()
     {
         GeneralControl();
+        AnimationUpdate();
+
     }
 
-   
+
     void LateUpdate()
     {
         InputProcesses();
        
     }
-
-   
 
     void GeneralControl()
     {
@@ -53,7 +60,7 @@ public class PlayerControl: MonoBehaviour
     }
 
     /*
-     * Control processes from PlayerControl class
+     * Control processes must be updated to scan for input events
      */
     void InputProcesses()
     {
@@ -63,6 +70,12 @@ public class PlayerControl: MonoBehaviour
         instantFireR.ProcessLoop();
         toggleCursor.ProcessLoop();
         
+    }
+
+    void AnimationUpdate()
+    {
+        animator.SetBool("fireR", constantFireR.inputDown);
+        animator.SetBool("fireL", constantFireL.inputDown);
     }
 
 }

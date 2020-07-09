@@ -53,6 +53,7 @@ public class Crosshair : MonoBehaviour
 
     void Start()
     {
+
         if ( shortHand )
         {
             currentCursor = shortCursor;
