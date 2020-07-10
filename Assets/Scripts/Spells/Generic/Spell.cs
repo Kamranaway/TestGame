@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class Spell : ScriptableObject
 {
-    [SerializeField] public float manaCost = 0; //Mana consumed on spell use or rate of mana consumed if streamed
     [SerializeField] public string name = "name"; //Name of spell
+    [SerializeField] public float manaCost = 0; //Mana consumed on spell use or rate of mana consumed if streamed
     [SerializeField] public float cooldown = 0; //Period of cooldown time
     [SerializeField] public float magnitude = 0; //Magnitude of spells effect (damage, health healed, speed modifier, etc)
     [SerializeField] public float duration = 0; //Time until spell effect is destroyed
@@ -17,7 +17,7 @@ public abstract class Spell : ScriptableObject
     [SerializeField] public TargetingType targetingType; //This notes what a given spell will target
     [SerializeField] public FireType fireType; //The fire type is the method in which a spell is cast
 
-    public abstract void Initialize(GameObject player);
+
     public abstract void cast();
 
     public enum SpellType

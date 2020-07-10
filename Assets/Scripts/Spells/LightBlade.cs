@@ -6,11 +6,6 @@ using UnityEngine;
 public class LightBlade: Spell
 {
 
-    public override void Initialize(GameObject obj)
-    {
-
-    }
-
     public override void cast()
     {
 

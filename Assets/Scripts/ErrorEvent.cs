@@ -20,8 +20,15 @@ using Debug = UnityEngine.Debug;
  * }
  * 
  ********************************************************
+ * OR
+ *********************************************************
+ * 
+ * System.Exception exception = new System.Exception("Error Message");
+ * Trace.TraceError(exception.Message);
+ * 
+ ********************************************************
  */
-public sealed class ExEvent
+public sealed class ErrorEvent
 {
     public static void Trace(System.Exception exception) 
     {

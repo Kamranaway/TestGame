@@ -6,10 +6,7 @@ using UnityEngine;
 public class LightDart : Spell
 {
 
-    public override void Initialize(GameObject obj)
-    {
-        
-    }
+   
 
     public override void cast()
     {
