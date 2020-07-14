@@ -14,6 +14,7 @@ public abstract class Spell : ScriptableObject
 
     [SerializeField] public Texture2D icon;
     [SerializeField] public AudioClip castSound;
+    [SerializeField] public AudioClip chargeSound;
 
     [SerializeField] public SpellType spellType; //This notes what the general purpose of a spell is
     [SerializeField] public TargetingType targetingType; //This notes what a given spell will target

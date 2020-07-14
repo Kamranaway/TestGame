@@ -24,7 +24,7 @@ public abstract class SpellHandler : MonoBehaviour
     [HideInInspector] public float chargeTime = 0;
 
     [HideInInspector] public Texture2D icon;
-    [HideInInspector] public AudioSource castSound;
+    [HideInInspector] public AudioSource spellSound;
 
 
     public InputProcess instantFire;
@@ -43,6 +43,7 @@ public abstract class SpellHandler : MonoBehaviour
     private bool streamCycled = true;
 
     private Coroutine stream;
+    private Coroutine charge;
 
     private void Awake()
     {
@@ -68,6 +69,7 @@ public abstract class SpellHandler : MonoBehaviour
                 FireWithCooldown();
                 break;
             case FireType.Charge:
+                FireWithCharge();
                 break;
             case FireType.Stream:
                 FireWithStream();
@@ -91,7 +93,7 @@ public abstract class SpellHandler : MonoBehaviour
 
     private void SpellCast()
     {  
-        castSound.Play();
+        spellSound.Play();
         spell.cast();
     }
 
@@ -123,8 +125,9 @@ public abstract class SpellHandler : MonoBehaviour
         this.chargeTime = spell.chargeTime;
 
         //this.icon = spell.icon;
-        this.castSound = GetComponent<AudioSource>();
-        this.castSound.clip = spell.castSound;
+        this.spellSound = GetComponent<AudioSource>();
+        this.spellSound.clip = spell.castSound;
+  
 
         this.spellType = spell.spellType;
         this.targetingType = spell.targetingType;
@@ -145,7 +148,7 @@ public abstract class SpellHandler : MonoBehaviour
                 coolDownTimeLeft = cooldown;
 
 
-                castSound.PlayOneShot(castSound.clip);
+                spellSound.PlayOneShot(spellSound.clip);
                 spell.cast();
             }
         }
@@ -156,8 +159,19 @@ public abstract class SpellHandler : MonoBehaviour
     }
 
     private void FireWithCharge()
-    { 
-     
+    {
+        if ( instantFire.inputDown )
+        {
+            charge = StartCoroutine(ChargeCoroutine());
+        }
+        else if ( instantFire.inputUp )
+        {
+            spellSound.Stop();
+            spellSound.clip = spell.castSound;
+            spellSound.loop = false;
+            StopAllCoroutines();
+            StopAllCoroutines();
+        }
     }
 
     private void FireWithStream()
@@ -173,15 +187,38 @@ public abstract class SpellHandler : MonoBehaviour
         while ( constantFire.inputDown )
         {
             streamCycled = false;
-            castSound.PlayOneShot(castSound.clip);
+            spellSound.PlayOneShot(spellSound.clip);
             spell.cast();
            
             yield return new WaitForSeconds(frequency);
             streamCycled = true;
+
             if ( instantFire.inputUp ) 
             {
                 StopAllCoroutines();
             }
         }
+    }
+
+    IEnumerator ChargeCoroutine()
+    {
+        bool cycleComplete = false;
+        while ( !cycleComplete )
+        {
+            if ( constantFire.inputDown && !cycleComplete)
+            {
+                spellSound.clip = spell.chargeSound;
+                spellSound.loop = true;
+                spellSound.Play();
+                yield return new WaitForSeconds(chargeTime);
+                spellSound.Stop();
+                spellSound.clip = spell.castSound;
+                spellSound.loop = false;
+                spellSound.PlayOneShot(spellSound.clip);
+                spell.cast();
+                cycleComplete = true;
+                yield return true;
+            }
+        } 
     }
 }

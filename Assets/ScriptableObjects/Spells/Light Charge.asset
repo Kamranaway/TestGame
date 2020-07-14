@@ -21,6 +21,7 @@ MonoBehaviour:
   chargeTime: 1
   icon: {fileID: 0}
   castSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
+  chargeSound: {fileID: 8300000, guid: 956742593934c864abc5d472ac8b9a0b, type: 3}
   spellType: 3
   targetingType: 0
   fireType: 0
