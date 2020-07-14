@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4838e45f91b495a4a96b53910f0a0d72, type: 3}
   m_Name: Light Dart
   m_EditorClassIdentifier: 
-  manaCost: 0
   name: LightDart
+  manaCost: 0
   cooldown: 1
   magnitude: 0
   duration: 0
+  frequency: 0
+  chargeTime: 0
   icon: {fileID: 0}
   castSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
   spellType: 3
   targetingType: 0
+  fireType: 2

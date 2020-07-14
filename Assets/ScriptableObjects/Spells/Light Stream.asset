@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de1725feffbff1749867acb8ff33a48c, type: 3}
   m_Name: Light Stream
   m_EditorClassIdentifier: 
+  name: Light Stream
   manaCost: 0
-  name: name
   cooldown: 0
   magnitude: 0
   duration: 0
+  frequency: 1
+  chargeTime: 0
   icon: {fileID: 0}
-  castSound: {fileID: 0}
+  castSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
   spellType: 0
   targetingType: 0
+  fireType: 1

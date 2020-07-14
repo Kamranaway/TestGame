@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a6bbbf41fbc164098ebf325810d9d8, type: 3}
   m_Name: Light Charge
   m_EditorClassIdentifier: 
+  name: Light Charge
   manaCost: 0
-  name: name
   cooldown: 0
   magnitude: 0
   duration: 0
+  frequency: 0
+  chargeTime: 1
   icon: {fileID: 0}
-  castSound: {fileID: 0}
-  spellType: 0
+  castSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
+  spellType: 3
   targetingType: 0
+  fireType: 0

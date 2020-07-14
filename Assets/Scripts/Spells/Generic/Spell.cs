@@ -9,6 +9,8 @@ public abstract class Spell : ScriptableObject
     [SerializeField] public float cooldown = 0; //Period of cooldown time
     [SerializeField] public float magnitude = 0; //Magnitude of spells effect (damage, health healed, speed modifier, etc)
     [SerializeField] public float duration = 0; //Time until spell effect is destroyed
+    [SerializeField] public float frequency = 0; //Frequency of spell streaming
+    [SerializeField] public float chargeTime = 0; //Time until spell is released while held
 
     [SerializeField] public Texture2D icon;
     [SerializeField] public AudioClip castSound;

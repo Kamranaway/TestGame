@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using FireType = Spell.FireType;
 using SpellType = Spell.SpellType;
 using TargetingType = Spell.TargetingType;
@@ -9,32 +11,38 @@ using TargetingType = Spell.TargetingType;
 public abstract class SpellHandler : MonoBehaviour
 {
     [SerializeField] public Spell spell;
-    [SerializeField] public Spell lastSpell;
+    [HideInInspector][SerializeField] public Spell lastSpell;
     [SerializeField] public GameObject player;
     public PlayerControl playerControl;
 
-    public string name = "name"; //Name of spell
-    public float manaCost = 0; //Mana consumed on spell use or rate of mana consumed if streamed
-    public float cooldown = 0;
-    public float magnitude = 0; //Magnitude of spells effect (damage, health healed, speed modifier, etc)
-    public float duration = 0; //Time until spell effect is destroyed
+    [HideInInspector] public string name = "name"; //Name of spell
+    [HideInInspector] public float manaCost = 0; //Mana consumed on spell use or rate of mana consumed if streamed
+    [HideInInspector] public float cooldown = 0;
+    [HideInInspector] public float magnitude = 0; //Magnitude of spells effect (damage, health healed, speed modifier, etc)
+    [HideInInspector] public float duration = 0; //Time until spell effect is destroyed
+    [HideInInspector] public float frequency = 0;
+    [HideInInspector] public float chargeTime = 0;
 
-    public Texture2D icon;
-    public AudioSource castSound;
+    [HideInInspector] public Texture2D icon;
+    [HideInInspector] public AudioSource castSound;
 
 
     public InputProcess instantFire;
     public InputProcess constantFire;
 
-    private FireType fireType;
-    public SpellType spellType; 
-    public TargetingType targetingType; 
+    [HideInInspector] private FireType fireType;
+    [HideInInspector] public SpellType spellType;
+    [HideInInspector] public TargetingType targetingType;
 
 
-    public float nextReadyTime;
-    public float coolDownTimeLeft;
+    [HideInInspector] public float nextReadyTime;
+    [HideInInspector] public float coolDownTimeLeft;
 
     private bool initialized = false;
+    private bool streaming = false;
+    private bool streamCycled = true;
+
+    private Coroutine stream;
 
     private void Awake()
     {
@@ -62,10 +70,17 @@ public abstract class SpellHandler : MonoBehaviour
             case FireType.Charge:
                 break;
             case FireType.Stream:
+                FireWithStream();
                 break;
             default:
-                System.Exception exception = new System.Exception("Unidentified Fire Type or Null");
-                Trace.TraceError(exception.Message);
+                try
+                {
+                    throw new System.Exception("Unidentified FireType or Null");
+                }
+                catch ( System.Exception exception )
+                {
+                    ErrorEvent.Trace(exception);
+                }
                 break;
         }
 
@@ -104,6 +119,8 @@ public abstract class SpellHandler : MonoBehaviour
         this.cooldown = spell.cooldown;
         this.magnitude = spell.magnitude;
         this.duration = spell.duration;
+        this.frequency = spell.frequency;
+        this.chargeTime = spell.chargeTime;
 
         //this.icon = spell.icon;
         this.castSound = GetComponent<AudioSource>();
@@ -128,13 +145,43 @@ public abstract class SpellHandler : MonoBehaviour
                 coolDownTimeLeft = cooldown;
 
 
-                castSound.Play();
+                castSound.PlayOneShot(castSound.clip);
                 spell.cast();
             }
         }
         else
         {
             coolDownTimeLeft -= Time.deltaTime;
+        }
+    }
+
+    private void FireWithCharge()
+    { 
+     
+    }
+
+    private void FireWithStream()
+    { 
+        if ( instantFire.inputDown && streamCycled )
+        {
+          stream =  StartCoroutine(StreamCoroutine());
+        }
+    }
+
+    IEnumerator StreamCoroutine() 
+    {
+        while ( constantFire.inputDown )
+        {
+            streamCycled = false;
+            castSound.PlayOneShot(castSound.clip);
+            spell.cast();
+           
+            yield return new WaitForSeconds(frequency);
+            streamCycled = true;
+            if ( instantFire.inputUp ) 
+            {
+                StopAllCoroutines();
+            }
         }
     }
 }
