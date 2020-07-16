@@ -3,7 +3,13 @@ guid: 4838e45f91b495a4a96b53910f0a0d72
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - icon: {instanceID: 0}
+  - castSound: {instanceID: 0}
+  - chargeSound: {instanceID: 0}
+  - castPoint: {instanceID: 0}
+  - crosshair: {instanceID: 0}
+  - projectile: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -5,12 +5,26 @@ using UnityEngine;
 [CreateAssetMenu (menuName = "Spells/LightDart")]
 public class LightDart : Spell
 {
+    [SerializeField] GameObject projectile;
+    [SerializeField] float forceModifier = 2f;
 
-   
-
-    public override void cast()
+    public override void Init()
     {
+        this.castPoint = GameObject.Find("Char_Center");
+        this.crosshair = FindObjectOfType<Crosshair>(); 
+
+    }
+    public override void Cast()
+    {
+        GameObject firedProjectile =  Instantiate(projectile, castPoint.transform.position, castPoint.transform.rotation);
+        Rigidbody2D rb2d = firedProjectile.GetComponent<Rigidbody2D>();
+        float theta = Mathf.Deg2Rad * crosshair.angleToPlayer;
+        float x = castPoint.transform.position.x;
+        float y = castPoint.transform.position.y;
+        Vector2 forceAngle = new Vector2(Mathf.Cos(theta) * forceModifier, Mathf.Sin(theta) * forceModifier);
       
+        rb2d.AddForce(forceAngle , ForceMode2D.Impulse);
+
     }
 
    

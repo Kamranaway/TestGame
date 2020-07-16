@@ -6,10 +6,13 @@ using UnityEngine;
 public class LightShield: Spell
 {
 
-    public override void cast()
+    public override void Cast()
     {
 
     }
 
-
+    public override void Init()
+    {
+        throw new System.NotImplementedException();
+    }
 }

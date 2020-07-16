@@ -77,6 +77,7 @@ public class Crosshair : MonoBehaviour
         UpdateCursorAngle();
         CheckCursorToggle();
         TranslateCrosshair();
+        Debug.Log(angleToPlayer);
     }
 
     private void LateUpdate()
@@ -166,14 +167,14 @@ public class Crosshair : MonoBehaviour
 
         if ( shortHand )
         {
-            longCursorSprite.forceRenderingOff = true;
+
             shortCursorSprite.forceRenderingOff = false;
 
         }
         else
         {
             shortCursor.transform.position = longCursor.transform.position;
-            longCursorSprite.forceRenderingOff = false;
+          
             shortCursorSprite.forceRenderingOff = true;
         }
 

@@ -41,6 +41,7 @@ public abstract class SpellHandler : MonoBehaviour
     private bool initialized = false;
     private bool streaming = false;
     private bool streamCycled = true;
+    private bool chargeCycled = true;
 
     private Coroutine stream;
     private Coroutine charge;
@@ -94,7 +95,7 @@ public abstract class SpellHandler : MonoBehaviour
     private void SpellCast()
     {  
         spellSound.Play();
-        spell.cast();
+        spell.Cast();
     }
 
    
@@ -133,6 +134,8 @@ public abstract class SpellHandler : MonoBehaviour
         this.targetingType = spell.targetingType;
         fireType = spell.fireType;
 
+        spell.Init();
+
         initialized = true;
     }
 
@@ -149,7 +152,7 @@ public abstract class SpellHandler : MonoBehaviour
 
 
                 spellSound.PlayOneShot(spellSound.clip);
-                spell.cast();
+                spell.Cast();
             }
         }
         else
@@ -188,7 +191,7 @@ public abstract class SpellHandler : MonoBehaviour
         {
             streamCycled = false;
             spellSound.PlayOneShot(spellSound.clip);
-            spell.cast();
+            spell.Cast();
            
             yield return new WaitForSeconds(frequency);
             streamCycled = true;
@@ -214,10 +217,11 @@ public abstract class SpellHandler : MonoBehaviour
                 spellSound.Stop();
                 spellSound.clip = spell.castSound;
                 spellSound.loop = false;
-                spellSound.PlayOneShot(spellSound.clip);
-                spell.cast();
+                AudioSource.PlayClipAtPoint(spellSound.clip, spellSound.transform.position, 500);
+                //spellSound.PlayOneShot(spellSound.clip);
+                spell.Cast();
                 cycleComplete = true;
-                yield return true;
+                
             }
         } 
     }

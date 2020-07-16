@@ -20,8 +20,14 @@ public abstract class Spell : ScriptableObject
     [SerializeField] public TargetingType targetingType; //This notes what a given spell will target
     [SerializeField] public FireType fireType; //The fire type is the method in which a spell is cast
 
+    [HideInInspector] public GameObject castPoint;
+    [HideInInspector] public Crosshair crosshair;
 
-    public abstract void cast();
+
+
+
+    public abstract void Init();
+    public abstract void Cast();
 
     public enum SpellType
     {
