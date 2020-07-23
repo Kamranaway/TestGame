@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Base class for all spells.
+ */
 public abstract class Spell : ScriptableObject
 {
     [SerializeField] public string name = "name"; //Name of spell
@@ -18,15 +21,15 @@ public abstract class Spell : ScriptableObject
     [HideInInspector] public GameObject castPoint;
     [HideInInspector] public Crosshair crosshair;
 
-    public abstract void Init();
-    public abstract void Cast();
+    public abstract void Init(); //Spells must initialize to ensure required game objects are stored and ready to manipulate
+    public abstract void Cast(); //This method is used for what the spell does on cast
 
     public enum TargetingType
     {
         Enemy,
         Player,
-        Cursor
-
+        Cursor,
+        None
     }
 
     public enum FireType

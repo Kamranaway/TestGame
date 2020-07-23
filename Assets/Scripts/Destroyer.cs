@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+//Simple script to destroy a game object. May change implementation later.
 public class Destroyer : MonoBehaviour
 {
     public float projectileLife = 0;

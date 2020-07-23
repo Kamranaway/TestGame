@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(ProjectileSpell))]
 [CreateAssetMenu(menuName = "Spells/LightDart")]
 public class LightDart: InstantSpell
 {

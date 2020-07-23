@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Handles player health and mana. Will later handle the intitiation of death states.
+ */
 public class PlayerStats : MonoBehaviour
 {
     public float maxHealth = 100;

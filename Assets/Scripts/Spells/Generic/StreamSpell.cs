@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Stream Spells constantly fire
+ */
 public abstract class StreamSpell : Spell
 {
 

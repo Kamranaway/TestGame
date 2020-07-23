@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Updates the health bar UI.
+ */
 public class HealthBar : MonoBehaviour
 {
     Slider slider;

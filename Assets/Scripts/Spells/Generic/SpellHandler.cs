@@ -8,6 +8,11 @@ using FireType = Spell.FireType;
 
 using TargetingType = Spell.TargetingType;
 
+
+/*
+ * Pulls data from spell data containers and effectively equips a spell. Inherited by left and right instances of SpellHandler. 
+ * Need to add cooldown for charge.
+ */
 public abstract class SpellHandler : MonoBehaviour
 {
     [SerializeField] public Spell spell;

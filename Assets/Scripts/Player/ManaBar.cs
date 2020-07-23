@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Updates the mana bar UI.
+ */
 public class ManaBar : MonoBehaviour
 {
     Slider slider;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Spell must be charged, has cooldown.
+ */
 public abstract class ChargeSpell : Spell 
 {
 
