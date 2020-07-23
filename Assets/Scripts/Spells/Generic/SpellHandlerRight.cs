@@ -9,5 +9,6 @@ public class SpellHandlerRight: SpellHandler
         playerControl = FindObjectOfType<PlayerControl>();
         instantFire = playerControl.instantFireR;
         constantFire = playerControl.constantFireR;
+        stats = FindObjectOfType<PlayerStats>();
     }
 }

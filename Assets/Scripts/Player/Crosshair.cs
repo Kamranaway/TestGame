@@ -77,7 +77,6 @@ public class Crosshair : MonoBehaviour
         UpdateCursorAngle();
         CheckCursorToggle();
         TranslateCrosshair();
-        Debug.Log(angleToPlayer);
     }
 
     private void LateUpdate()
