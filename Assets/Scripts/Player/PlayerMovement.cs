@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetFloat("playerFaceAngle", playerFaceAngle);
-
+        Debug.Log(playerFaceAngle);
         animator.SetFloat("speed", speed);
         animator.Update(Time.deltaTime);
         animator.SetFloat("crosshairAngle", crosshair.angleToPlayer);

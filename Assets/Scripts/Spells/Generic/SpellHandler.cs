@@ -5,7 +5,6 @@ using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using FireType = Spell.FireType;
-
 using TargetingType = Spell.TargetingType;
 
 
@@ -15,10 +14,11 @@ using TargetingType = Spell.TargetingType;
  */
 public abstract class SpellHandler : MonoBehaviour
 {
-    [SerializeField] public Spell spell;
-   
-    [HideInInspector][SerializeField] public Spell lastSpell;
+    public Spell spell;
+    [HideInInspector]public Spell lastSpell;
+
     [SerializeField] public GameObject player;
+    public InputProcess spellShiftInput;
     public PlayerControl playerControl;
     public PlayerStats stats;
 
@@ -34,7 +34,6 @@ public abstract class SpellHandler : MonoBehaviour
     [HideInInspector] public AudioSource castSound;
     [HideInInspector] public AudioSource chargeSound;
 
-
     public InputProcess instantFire;
     public InputProcess constantFire;
 
@@ -46,6 +45,8 @@ public abstract class SpellHandler : MonoBehaviour
     [HideInInspector] public float nextReadyTime;
     [HideInInspector] public float coolDownTimeLeft;
 
+    [HideInInspector] public List<Spell> equippedSpells;
+
     private bool initialized = false;
     private bool streaming = false;
     private bool streamCycled = true;
@@ -53,6 +54,8 @@ public abstract class SpellHandler : MonoBehaviour
 
     private Coroutine stream;
     private Coroutine charge;
+
+    private int currentIndex = 0;
 
     private void Awake()
     {
@@ -69,6 +72,7 @@ public abstract class SpellHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SpellShift();
         CheckSpellChange();
         CheckInitialization();
 
@@ -99,13 +103,6 @@ public abstract class SpellHandler : MonoBehaviour
 
         lastSpell = spell;
     }
-
-    private void SpellCast()
-    {  
-        castSound.Play();
-        spell.Cast();
-    }
-
    
     void CheckSpellChange()
     {
@@ -117,7 +114,7 @@ public abstract class SpellHandler : MonoBehaviour
 
     void CheckInitialization()
     {
-        if ( !initialized )
+        if ( initialized == false)
         {
             Init();
         }
@@ -130,7 +127,6 @@ public abstract class SpellHandler : MonoBehaviour
         this.manaCost = spell.manaCost;
         this.magnitude = spell.magnitude;
         this.duration = spell.duration;
-
         this.fireType = spell.fireType;
 
         AudioSource[] audioSources = GameObject.Find("Spells").GetComponents<AudioSource>();
@@ -202,8 +198,7 @@ public abstract class SpellHandler : MonoBehaviour
         else if ( instantFire.inputUp )
         {
             castSound.Stop();
-            castSound.clip = spell.castSound;
-            castSound.loop = false;
+            chargeSound.Stop();
             StopAllCoroutines();
             StopAllCoroutines();
         }
@@ -255,6 +250,20 @@ public abstract class SpellHandler : MonoBehaviour
                 cycleComplete = true;
                 
             }
-        } 
+            
+        }
+        chargeSound.Stop();
+    }
+
+    public void ChangeEquippedSpell(int index, Spell spell) //index may not be greater than 1
+    {
+        equippedSpells[ index ] = spell;
+    }
+
+    private void SpellShift() 
+    {
+        if(spellShiftInput.inputDown)
+        currentIndex = (currentIndex == 1) ? 0 : 1;
+        spell = equippedSpells[ currentIndex ];
     }
 }

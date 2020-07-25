@@ -9,6 +9,9 @@ public class SpellHandlerLeft: SpellHandler
         playerControl = FindObjectOfType<PlayerControl>();
         instantFire = playerControl.instantFireL;
         constantFire = playerControl.constantFireL;
+        spellShiftInput = playerControl.shiftLeftSpell;
+
         stats = FindObjectOfType<PlayerStats>();
+        equippedSpells = FindObjectOfType<Spells>().leftSpells;
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4838e45f91b495a4a96b53910f0a0d72, type: 3}
   m_Name: Light Dart
   m_EditorClassIdentifier: 
-  name: LightDart
+  name: Light Dart
   manaCost: 10
   magnitude: 0
   duration: 2
