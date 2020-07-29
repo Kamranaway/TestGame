@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : PlayerScript
+public class PlayerMovement : MonoBehaviour
 {
     [Range(0, 1)] [SerializeField] float speedFactor = 1; //Tune in context menu for desired player speed
     Crosshair crosshair;
@@ -36,7 +36,6 @@ public class PlayerMovement : PlayerScript
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void MovePlayer()
@@ -53,7 +52,7 @@ public class PlayerMovement : PlayerScript
         }
 
         animator.SetFloat("playerFaceAngle", playerFaceAngle);
-
+        Debug.Log(playerFaceAngle);
         animator.SetFloat("speed", speed);
         animator.Update(Time.deltaTime);
         animator.SetFloat("crosshairAngle", crosshair.angleToPlayer);

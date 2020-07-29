@@ -10,10 +10,8 @@ using UnityEngine.Experimental.Rendering;
 
 /*
  * Script responsible for crosshair control and change.
- * 
- * This code is a mess, I will fix it later :p
  */
-public class Crosshair : PlayerScript
+public class Crosshair : MonoBehaviour
 {
     [SerializeField] float maxRadius = 1;
     GameObject longCursor;
@@ -55,6 +53,7 @@ public class Crosshair : PlayerScript
 
     void Start()
     {
+
         if ( shortHand )
         {
             currentCursor = shortCursor;
@@ -167,14 +166,14 @@ public class Crosshair : PlayerScript
 
         if ( shortHand )
         {
-            longCursorSprite.forceRenderingOff = true;
+
             shortCursorSprite.forceRenderingOff = false;
 
         }
         else
         {
             shortCursor.transform.position = longCursor.transform.position;
-            longCursorSprite.forceRenderingOff = false;
+          
             shortCursorSprite.forceRenderingOff = true;
         }
 

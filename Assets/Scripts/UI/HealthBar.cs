@@ -1,0 +1,24 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+/*
+ * Updates the health bar UI.
+ */
+public class HealthBar : MonoBehaviour
+{
+    Slider slider;
+    PlayerStats stats;
+    private void Awake()
+    {
+        this.slider = GetComponent<Slider>();
+        this.stats = FindObjectOfType<PlayerStats>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        slider.value = stats.health;
+    }
+}

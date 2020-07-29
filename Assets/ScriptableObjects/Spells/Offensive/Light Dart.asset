@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4838e45f91b495a4a96b53910f0a0d72, type: 3}
+  m_Name: Light Dart
+  m_EditorClassIdentifier: 
+  name: Light Dart
+  manaCost: 10
+  magnitude: 0
+  duration: 2
+  icon: {fileID: 0}
+  castSound: {fileID: 8300000, guid: 530ffa7544fa96441892b359865f16ac, type: 3}
+  targetingType: 0
+  fireType: 2
+  castPoint: {fileID: 0}
+  crosshair: {fileID: 0}
+  cooldown: 1
+  projectile: {fileID: 6888785731390944657, guid: 7c77a742863f3904cb87e8b446372cf0,
+    type: 3}
+  forceModifier: 2
